@@ -1,0 +1,13 @@
+class Account < ApplicationRecord
+  def create_account!(account_params, user_params)
+    transaction do
+      account = Account.create!(account_params)
+      first_user = User.new(user_params)
+      first_user.admin = true
+      first_user.save!
+      self.users << first_user
+      Mailer.deliver_confirmation(first_user)
+      return account
+    end
+  end
+end
