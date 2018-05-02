@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  include UserConverter
+
   has_many :memberships
 
   def find_recent_active_memberships
